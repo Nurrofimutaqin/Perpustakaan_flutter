@@ -4,9 +4,15 @@ import 'package:perpustakaan/pages/register.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool _obscureText = true;
 
   Future<void> loginUser(BuildContext context) async {
     final String apiUrl = 'http://10.0.2.2:8000/api/login/';
@@ -34,7 +40,8 @@ class LoginScreen extends StatelessWidget {
       final String token = responseData['access'];
       final String role = responseData['user']['role'];
 
-      print('Token: $token');print('Token: $role');
+      print('Token: $token');
+      print('Token: $role');
       // Simpan token ke SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('access_token', token);
@@ -59,7 +66,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Center(child: Text('LOGIN')),
       ),
       body: Center(
         child: Column(
@@ -70,9 +77,8 @@ class LoginScreen extends StatelessWidget {
               height: 300,
               width: 350,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey,
-              ),
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.pink.withOpacity(0.5)),
               child: Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
@@ -82,28 +88,28 @@ class LoginScreen extends StatelessWidget {
                     TextField(
                       controller: usernameController,
                       decoration: InputDecoration(
-                        labelText: 'Username',
-                        labelStyle: TextStyle(
-                          color: Colors.pink,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Colors.pink,
-                        )),
-                      ),
+                          labelText: 'Username',
+                          labelStyle: TextStyle(color: Colors.white),
+                          border: OutlineInputBorder()),
                     ),
+                    SizedBox(height: 20),
                     TextField(
+                      obscureText: _obscureText,
                       controller: passwordController,
-                      obscureText: true,
                       decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white),
                         labelText: 'Password',
-                        labelStyle: TextStyle(
-                          color: Colors.pink,
+                        border: OutlineInputBorder(),
+                        suffixIcon: IconButton(
+                          icon: Icon(_obscureText
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
                         ),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Colors.pink,
-                        )),
                       ),
                     ),
                     SizedBox(height: 20),

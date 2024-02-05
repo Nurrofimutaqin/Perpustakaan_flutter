@@ -4,7 +4,7 @@ import 'package:perpustakaan/pages/book_loans_near_overdue.dart';
 import 'package:perpustakaan/pages/book_loans_overdue.dart';
 import 'package:perpustakaan/pages/change-data.dart';
 import 'package:perpustakaan/pages/change-password.dart';
-import 'package:perpustakaan/pages/detail_peminjaman.dart';
+// import 'package:perpustakaan/pages/detail_peminjaman.dart';
 import 'package:perpustakaan/pages/search_book.dart';
 import 'package:perpustakaan/providers/api_authenticated.dart';
 import 'package:perpustakaan/providers/api_category.dart';
@@ -21,15 +21,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late String _role = '';
+    ApiUser UserApi = ApiUser();
+  ApiBook BookApi = ApiBook();
+  ApiCategory CategoryApi = ApiCategory();
   @override
   void initState() {
     super.initState();
     _loadUserData();
   }
 
-  ApiUser UserApi = ApiUser();
-  ApiBook BookApi = ApiBook();
-  ApiCategory CategoryApi = ApiCategory();
+
   Future<void> _loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -174,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Column(
                           children: [
                             ListTile(
-                              leading: Icon(Icons.info),
+                              leading: Icon(Icons.calendar_month_rounded),
                               title: Text("Book Loans Near Overdue"),
                               onTap: () {
                                 Navigator.push(
@@ -185,13 +186,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                             ),
                             ListTile(
-                              leading: Icon(Icons.info),
+                              leading: Icon(Icons.calendar_view_month),
                               title: Text("Book Loans Overdue"),
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => BookLoansOverdue()),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.info),
+                              title: Text("Change Password"),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ChangePassword()),
                                 );
                               },
                             ),
@@ -213,4 +225,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

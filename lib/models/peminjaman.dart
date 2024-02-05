@@ -10,11 +10,11 @@ class Peminjaman {
   factory Peminjaman.fromJson(Map<String, dynamic> json) {
     return Peminjaman(
         id: json['id'],
-        tanggal_pinjam: json['tanggal_pinjam'],
-        tanggal_kembali: json['tanggal_kembali'],
+        tanggal_pinjam: json['tanggal_pinjam'].toString(),
+        tanggal_kembali: json['tanggal_kembali'].toString(),
         status: json['status'],
-        member_nama: json['member_nama'],
-        buku_judul: json['buku_judul'],
+        member_nama: json['member_nama'].toString(),
+        buku_judul: json['buku_judul'].toString(),
         );
   }
 }

@@ -15,7 +15,7 @@ class ChangeData extends StatefulWidget {
 class _ChangeDataState extends State<ChangeData> {
   ApiUser UserApi = ApiUser();
 
- late TextEditingController firstNameController;
+  late TextEditingController firstNameController;
   late TextEditingController lastNameController;
   late TextEditingController emailController;
   late TextEditingController usernameController;
@@ -29,6 +29,7 @@ class _ChangeDataState extends State<ChangeData> {
     emailController = TextEditingController(text: widget.user.email);
     usernameController = TextEditingController(text: widget.user.username);
   }
+
   Future<void> changedatauser(BuildContext context) async {
     final String apiUrl = 'http://10.0.2.2:8000/api/change-data/member/';
 
@@ -63,6 +64,10 @@ class _ChangeDataState extends State<ChangeData> {
     // Memeriksa status response
     if (response.statusCode == 200) {
       // Data berhasil ditambahkan
+
+      setState(() {
+        UserApi.userDetail();
+      });
       print('Data berhasil ditambahkan');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -118,14 +123,8 @@ class _ChangeDataState extends State<ChangeData> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                setState(() {
-                  ApiUser apiuser = ApiUser();
-                  apiuser.getdatauser();
                 changedatauser(context);
-
-                });
-              Navigator.pop(context);
-              } ,
+              },
               child: Text('Change Data'),
               style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey,
@@ -137,5 +136,3 @@ class _ChangeDataState extends State<ChangeData> {
     );
   }
 }
-
-

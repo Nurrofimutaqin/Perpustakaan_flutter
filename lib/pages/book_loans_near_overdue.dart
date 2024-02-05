@@ -32,7 +32,13 @@ class BookLoansAll extends StatelessWidget {
                           child: ListTile(
                             tileColor: Colors.grey.withOpacity(0.1),
                             title: Text( peminjaman['buku_judul']),
-                            subtitle: Text('Tanggal pinjam : ${peminjaman["tanggal_pinjam"]} || Due Date:  ${peminjaman["tanggal_kembali"]}'),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Tanggal pinjam : ${peminjaman["tanggal_pinjam"]}'),
+                                Text('Due Date:  ${peminjaman["tanggal_kembali"]}')
+                              ],
+                            ),
                             trailing: Text(status),
                               onTap: () async {
                                 var peminjamanId = peminjaman['id'];
